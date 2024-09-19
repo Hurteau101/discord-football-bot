@@ -1,11 +1,8 @@
-# tasks.py
 from celery_app import app
 from database import Database
 from cfb import CFB
 from nfl import NFL
 from discord import DiscordBot
-
-# Load environment variables
 import os
 from dotenv import load_dotenv
 
