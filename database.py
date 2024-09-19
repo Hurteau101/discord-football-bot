@@ -85,6 +85,7 @@ class Database:
         else:
             return {"entry_amount": 0, "entry_data": None}
 
+    # Unused method for now.
     def count_lines(self, record_data):
         record_list = [record[2] for record in record_data["entry_data"]]
         count_records = Counter(record_list)
