@@ -104,9 +104,8 @@ class Database:
 
     def check_past_date_time(self):
         current_time_utc = datetime.now(timezone.utc)
-        mountain_tz = pytz.timezone("America/Denver")
+        mountain_tz = pytz.timezone("America/Edmonton")
         current_time_mountain = current_time_utc.astimezone(mountain_tz)
-        formatted_time_mountain = current_time_mountain.strftime("%Y-%m-%d %H:%M:%S")
 
         try:
             with psycopg2.connect(**self.connection_params) as conn:
@@ -116,7 +115,8 @@ class Database:
                        WHERE game_date < %s;
                        """
 
-                    cursor.execute(delete_query, (formatted_time_mountain,))
+                    # Use the timezone-aware datetime object in the query
+                    cursor.execute(delete_query, (current_time_mountain,))
                     conn.commit()
         except psycopg2.Error as e:
             print(f"Error deleting records: {e}")
